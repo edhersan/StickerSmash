@@ -1,19 +1,39 @@
-import { Link, Stack } from "expo-router";
-import { StyleSheet, Switch, Text, View } from "react-native";
+import { useState } from "react";
+import { Stack, useRouter } from "expo-router";
+import { StyleSheet, View } from "react-native";
+import { Surface, Switch, Text } from "react-native-paper";
+
+import Button from "@/components/Button";
+import { useAppTheme } from "@/theme";
 
 export default function Settings() {
+  const theme = useAppTheme();
+  const router = useRouter();
+  const [saveEditedImages, setSaveEditedImages] = useState(true);
+
   return (
-    <View style={styles.container}>
+    <Surface
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
       <Stack.Screen options={{ title: "Settings" }} />
-      <Text style={styles.title}>Settings</Text>
+      <Text
+        variant="headlineMedium"
+        style={{ color: theme.colors.primary }}
+      >
+        Settings
+      </Text>
       <View style={styles.row}>
-        <Text style={styles.label}>Save edited images</Text>
-        <Switch value />
+        <Text variant="bodyLarge" style={{ color: theme.colors.onSurface }}>
+          Save edited images
+        </Text>
+        <Switch value={saveEditedImages} onValueChange={setSaveEditedImages} />
       </View>
-      <Link href="/" style={styles.link}>
-        Back to home
-      </Link>
-    </View>
+      <Button
+        label="Back to home"
+        variant="text"
+        onPress={() => router.push("/")}
+      />
+    </Surface>
   );
 }
 
@@ -25,21 +45,9 @@ const styles = StyleSheet.create({
     gap: 24,
     padding: 24,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
-  },
   row: {
     alignItems: "center",
     flexDirection: "row",
     gap: 16,
-  },
-  label: {
-    fontSize: 16,
-  },
-  link: {
-    color: "#208AEF",
-    fontSize: 16,
-    fontWeight: "600",
   },
 });

@@ -1,18 +1,37 @@
-import { Link, Stack } from "expo-router";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Stack, useRouter } from "expo-router";
+import { StyleSheet } from "react-native";
+import { Surface, Text } from "react-native-paper";
+
+import Button from "@/components/Button";
+import { useAppTheme } from "@/theme";
 
 export default function Editor() {
+  const theme = useAppTheme();
+  const router = useRouter();
+
   return (
-    <View style={styles.container}>
+    <Surface
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
       <Stack.Screen options={{ title: "Editor" }} />
-      <Text style={styles.title}>Sticker editor</Text>
-      <Text style={styles.description}>
+      <Text
+        variant="headlineMedium"
+        style={{ color: theme.colors.primary }}
+      >
+        Sticker editor
+      </Text>
+      <Text
+        variant="bodyLarge"
+        style={[styles.description, { color: theme.colors.onSurfaceVariant }]}
+      >
         Choose an image from the home screen to start creating a sticker.
       </Text>
-      <Link href="/" asChild>
-        <Button title="Choose an image" />
-      </Link>
-    </View>
+      <Button
+        label="Choose an image"
+        icon="image"
+        onPress={() => router.push("/")}
+      />
+    </Surface>
   );
 }
 
@@ -24,13 +43,7 @@ const styles = StyleSheet.create({
     gap: 16,
     padding: 24,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
-  },
   description: {
-    color: "#667085",
-    fontSize: 16,
     textAlign: "center",
   },
 });

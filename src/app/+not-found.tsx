@@ -1,18 +1,37 @@
-import { Link, Stack } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { Stack, useRouter } from "expo-router";
+import { StyleSheet } from "react-native";
+import { Surface, Text } from "react-native-paper";
+
+import Button from "@/components/Button";
+import { useAppTheme } from "@/theme";
 
 export default function NotFoundScreen() {
+  const theme = useAppTheme();
+  const router = useRouter();
+
   return (
-    <View style={styles.container}>
+    <Surface
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
       <Stack.Screen options={{ title: "Not found" }} />
-      <Text style={styles.title}>Page not found</Text>
-      <Text style={styles.description}>
+      <Text
+        variant="headlineMedium"
+        style={{ color: theme.colors.primary }}
+      >
+        Page not found
+      </Text>
+      <Text
+        variant="bodyLarge"
+        style={[styles.description, { color: theme.colors.onSurfaceVariant }]}
+      >
         The page you are looking for does not exist.
       </Text>
-      <Link href="/" style={styles.link}>
-        Return to home
-      </Link>
-    </View>
+      <Button
+        label="Return to home"
+        variant="text"
+        onPress={() => router.replace("/")}
+      />
+    </Surface>
   );
 }
 
@@ -24,18 +43,7 @@ const styles = StyleSheet.create({
     gap: 16,
     padding: 24,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
-  },
   description: {
-    color: "#667085",
-    fontSize: 16,
     textAlign: "center",
-  },
-  link: {
-    color: "#208AEF",
-    fontSize: 16,
-    fontWeight: "600",
   },
 });
